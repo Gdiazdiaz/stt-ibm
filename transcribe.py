@@ -128,7 +128,7 @@ def on_error(self, error):
     print(error)
 
 
-def on_close(ws):
+def on_close(ws, close_status_code, close_msg):
     """Upon close, print the complete and final transcript."""
     global LAST
     if LAST:
@@ -164,15 +164,7 @@ def on_open(ws):
                      args=(ws, args.timeout)).start()
 
 def get_url():
-    config = configparser.RawConfigParser()
-    config.read('speech.cfg')
-    # See
-    # https://console.bluemix.net/docs/services/speech-to-text/websockets.html#websockets
-    # for details on which endpoints are for each region.
-    region = config.get('auth', 'region')
-    host = REGION_MAP[region]
-    return ("wss://{}/speech-to-text/api/v1/recognize"
-           "?model=en-US_BroadbandModel").format(host)
+    return "wss://api.us-south.speech-to-text.watson.cloud.ibm.com/v1/recognize?model=es-LA_Telephony"
 
 def get_auth():
     config = configparser.RawConfigParser()
